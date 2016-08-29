@@ -8,9 +8,14 @@ function wcccpp_ajax_callback() {
 	$url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx';
 	$data = array();
 
+	// CEP de origem
+	$data['sCepOrigem'] = 'CEP DE ORIGEM AQUI';
+	// códigos dos serviços para calcular: Sedex e Pac
+	$data['nCdServico'] = '40010,41106';
+
+	// outras configurações
 	$data['nCdEmpresa'] = '';
 	$data['sDsSenha'] = '';
-	$data['sCepOrigem'] = '[CEP DE ORIGEM AQUI]';
 	$data['sCepDestino'] = $_POST['sCepDestino'];
 	$data['nVlPeso'] = '1';
 	$data['nCdFormato'] = '1';
@@ -22,7 +27,6 @@ function wcccpp_ajax_callback() {
 	$data['nVlValorDeclarado'] = '0';
 	$data['sCdAvisoRecebimento'] = 'n';
 	$data['StrRetorno'] = 'xml';
-	$data['nCdServico'] = '40010,41106'; // Sedex e Pac
 
 	$data = http_build_query($data);
 
@@ -37,5 +41,5 @@ function wcccpp_ajax_callback() {
 }
 
 function wcccpp_enqueue_script() {
-	wp_enqueue_script( 'wcccpp-calculator', plugin_dir_url( __FILE__ ) . 'assets/js/wcccpp-calculator.js', array(), '0.0.1', true );
+	wp_enqueue_script( 'wcccpp-calculator', wcccpp_directory_uri() . 'assets/js/wcccpp-calculator.js', array(), '0.0.1', true );
 }

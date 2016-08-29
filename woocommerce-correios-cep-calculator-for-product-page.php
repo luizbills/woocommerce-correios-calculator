@@ -11,6 +11,10 @@
  * Domain Path:  /languages/
  */
 
+function wcccpp_directory_uri() {
+	return plugin_dir_url( __FILE__ );
+}
+
 require 'templates/cep-calculator.php';
 require 'inc/plugin_functions.php';
 require 'inc/plugin_hooks.php';
