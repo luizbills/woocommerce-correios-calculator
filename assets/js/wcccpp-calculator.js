@@ -1,17 +1,7 @@
 window.jQuery(document).ready(function ($) {
-	var wcccpp = wcccpp || {}
+	var debug = false
 	
-	function block ($el, flag) {
-		if (flag === undefined) flag = true
-		$el.attr('disabled', flag)
-	}
-	
-	function _n (singular, plural, n) {
-		if (n == 0 || n > 1) return plural
-		return singular
-	}
-	
-	wcccpp.calculator = {
+	var wcccppCalculator = {
 	
 		init: function () {
 			this.cep_calculator_submit = this.cep_calculator_submit.bind(this)
@@ -38,8 +28,6 @@ window.jQuery(document).ready(function ($) {
 				'action': 'wcccpp_ajax',
 				'sCepDestino': $formData[0].value 
 			}
-			
-			console.log(data.sCepDestino)
 
 			block($('.wcccpp-field .input-text'))
 			block($('.wcccpp-field .button'))
@@ -53,12 +41,12 @@ window.jQuery(document).ready(function ($) {
 				url: '/wp-admin/admin-ajax.php',
 				data: data,
 				success: function(res) {
+					if (debug) console.log(res)
+
 					var NAMES = {
 						'40010': 'SEDEX',
 						'41106': 'PAC'
 					}
-					
-					console.log(res)
 					
 					self.clearMessages()
 					for (var i in res.data.cServico) {
@@ -70,7 +58,7 @@ window.jQuery(document).ready(function ($) {
 						var msg = ''
 						
 						if (service.Erro != 0) {
-							msg = 'Ocorreu um erro no calculo do serviço ' + name;
+							msg = 'Ocorreu um erro no calculo do serviço ' + name
 							if (service.Erro == -2) {
 								msg += ': CEP de origem inválido (configure o plugin).'
 							} else if (service.Erro == -3) {
@@ -121,6 +109,15 @@ window.jQuery(document).ready(function ($) {
 		}
 	}
 	
-	wcccpp.calculator.init()
-
+	function block ($el, flag) {
+		if (flag === undefined) flag = true
+		$el.attr('disabled', flag)
+	}
+	
+	function _n (singular, plural, n) {
+		if (n == 0 || n > 1) return plural
+		return singular
+	}
+	
+	wcccppCalculator.init()
 })
