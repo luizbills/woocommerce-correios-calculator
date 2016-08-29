@@ -16,7 +16,6 @@ function wcccpp_ajax_callback() {
 	// outras configurações
 	$data['nCdEmpresa'] = '';
 	$data['sDsSenha'] = '';
-	$data['sCepDestino'] = $_POST['sCepDestino'];
 	$data['nVlPeso'] = '1';
 	$data['nCdFormato'] = '1';
 	$data['nVlComprimento'] = '16';
@@ -27,6 +26,8 @@ function wcccpp_ajax_callback() {
 	$data['nVlValorDeclarado'] = '0';
 	$data['sCdAvisoRecebimento'] = 'n';
 	$data['StrRetorno'] = 'xml';
+	
+	$data['sCepDestino'] = $_POST['sCepDestino'];
 
 	$data = http_build_query($data);
 
