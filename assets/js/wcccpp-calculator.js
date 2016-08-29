@@ -70,9 +70,14 @@ window.jQuery(document).ready(function ($) {
 						var msg = ''
 						
 						if (service.Erro != 0) {
-							msg = typeof service.MsgErro === 'string' ? 
-								service.MsgErro :
-								'Ocorreu um erro no calculo do serviço ' + name + '. Por favor, tente mais tarde ou use a calculadora da página do carrinho.'
+							msg = 'Ocorreu um erro no calculo do serviço ' + name;
+							if (service.Erro == -2) {
+								msg += ': CEP de origem inválido (configure o plugin).'
+							} else if (service.Erro == -3) {
+								msg += ': O CEP digitado está incorreto.'
+							} else {
+								msg += '. Por favor, tente mais tarde ou use a calculadora da página do carrinho.'
+							}
 						} else {
 							msg = name + ' (Entrega em ' + days + _n(' dia', ' dias', days) + '): R$' + cost
 						}
