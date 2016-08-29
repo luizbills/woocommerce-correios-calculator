@@ -9,7 +9,7 @@ function wcccpp_ajax_callback() {
 	$data = array();
 
 	// CEP de origem
-	$data['sCepOrigem'] = '00000000';
+	$data['sCepOrigem'] = '00000-000';
 	// códigos dos serviços para calcular: Sedex e Pac
 	$data['nCdServico'] = '40010,41106';
 
