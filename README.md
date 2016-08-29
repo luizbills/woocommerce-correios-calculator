@@ -5,4 +5,4 @@
 
 ## Como configurar
 - Vá no arquivo [inc/plugin_functions.php](https://github.com/luizbills/woocommerce-correios-cep-calculator-for-product-page/blob/master/inc/plugin_functions.php#L12) dentro do plugin e adicione o "CEP de origem".
-- Para outras configurações como "dias adicionais", mude a mensagem diretamente no arquivo [assets/js/wcccpp-calculator.js](https://github.com/luizbills/woocommerce-correios-cep-calculator-for-product-page/blob/master/assets/js/wcccpp-calculator.js#L77)
+- Para outras configurações como "dias adicionais", mude a mensagem diretamente no arquivo [assets/js/wcccpp-calculator.js](https://github.com/luizbills/woocommerce-correios-cep-calculator-for-product-page/blob/master/assets/js/wcccpp-calculator.js#L70)
