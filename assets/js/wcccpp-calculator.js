@@ -32,7 +32,7 @@ window.jQuery(document).ready(function ($) {
 			block($('.wcccpp-field .input-text'))
 			block($('.wcccpp-field .button'))
 			this.clearMessages()
-			this.addMessage('Calculando... aguarde, por favor.')
+			this.addMessage('Calculando... aguarde, por favor.', 'loading')
 			
 			var self = this
 
@@ -56,6 +56,7 @@ window.jQuery(document).ready(function ($) {
 						var days = service.PrazoEntrega
 						
 						var msg = ''
+						var msgType = ''
 						
 						if (service.Erro != 0) {
 							msg = 'Ocorreu um erro no calculo do serviço ' + name
@@ -66,11 +67,13 @@ window.jQuery(document).ready(function ($) {
 							} else {
 								msg += '. Por favor, tente mais tarde ou use a calculadora da página do carrinho.'
 							}
+							msgType = 'error'
 						} else {
 							msg = name + ' (Entrega em ' + days + _n(' dia', ' dias', days) + '): R$' + cost
+							msgType = 'success'
 						}
 						
-						self.addMessage(msg)
+						self.addMessage(msg, msgType)
 					}
 				},
 				complete: function () {
