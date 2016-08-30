@@ -6,7 +6,7 @@ function wcccpp_get_calculator_template() {
 	<form class="wcccpp-correios-calculator" action="" method="post">
 
 		<section class="wcccpp-calculator-form">
-			<a class="button wcccpp-button" href="#0">Calcular CEP</a>
+			<a class="button wcccpp-button" href="#0">Calcular Frete</a>
 			<section class="wcccpp-calculator-inside" style="display: none;">
 				<p class="wcccpp-field">
 					<label for="sCepDestino">Digite o seu CEP
