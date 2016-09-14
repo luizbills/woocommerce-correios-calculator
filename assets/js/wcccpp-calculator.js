@@ -16,18 +16,15 @@ window.jQuery(document).ready(function ($) {
 				'click',
 				this.cep_calculator_show
 			)
+			
+			this.callbacks = []
 		},
 		
 		cep_calculator_submit: function (evt) {
 			evt.preventDefault()
 
 			var $form = $(evt.currentTarget)
-			var $formData = $form.serializeArray()
-
-			var data = {
-				'action': 'wcccpp_ajax',
-				'sCepDestino': $formData[0].value 
-			}
+			var data = $form.serialize() + '&action=wcccpp_ajax'
 
 			block($('.wcccpp-field .input-text'))
 			block($('.wcccpp-field .button'))
@@ -42,38 +39,12 @@ window.jQuery(document).ready(function ($) {
 				data: data,
 				success: function(res) {
 					if (debug) console.log(res)
+					var i = 0,
+						funcs = self.callbacks,
+						len = funcs && funcs.length;
 
-					var NAMES = {
-						'40010': 'SEDEX',
-						'41106': 'PAC'
-					}
-					
-					self.clearMessages()
-					for (var i in res.data.cServico) {
-						var service = res.data.cServico[i]
-						var name = NAMES[service.Codigo] || 'Método Desconhecido'
-						var cost = service.Valor
-						var days = service.PrazoEntrega
-						
-						var msg = ''
-						var msgType = ''
-						
-						if (service.Erro != 0) {
-							msg = 'Ocorreu um erro no calculo do serviço ' + name
-							if (service.Erro == -2) {
-								msg += ': CEP de origem inválido (configure o plugin).'
-							} else if (service.Erro == -3) {
-								msg += ': O CEP digitado está incorreto.'
-							} else {
-								msg += '. Por favor, tente mais tarde ou use a calculadora da página do carrinho.'
-							}
-							msgType = 'error'
-						} else {
-							msg = name + ' (Entrega em ' + days + _n(' dia', ' dias', days) + '): R$' + cost
-							msgType = 'success'
-						}
-						
-						self.addMessage(msg, msgType)
+					for(; i < len; i++) {
+						funcs[i].call(null, res.data)
 					}
 				},
 				complete: function () {
@@ -123,4 +94,25 @@ window.jQuery(document).ready(function ($) {
 	}
 	
 	wcccppCalculator.init()
+	
+	wcccppCalculator.defaultCallback = function(data) {
+		wcccppCalculator.clearMessages()
+		
+		for(var i = 0; i < data.length; i++) {
+			var _data = data[i]
+			var msg = '';
+			if (_data.error) {
+				msg = 'Erro ao calcular o "' + _data.title +'": ' + _data.msg
+			} else {
+				msg = _data.title + ' (Entrega em até ' + _data.days + ' dias): ' + _data.price_formatted
+			}
+			
+			wcccppCalculator.addMessage(msg, _data.error ? 'error' : '');
+		}
+		
+	}
+	
+	wcccppCalculator.callbacks.push(wcccppCalculator.defaultCallback)
+	
+	window.wcccppCalculator = wcccppCalculator
 })
