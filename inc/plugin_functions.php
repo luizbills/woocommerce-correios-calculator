@@ -154,4 +154,5 @@ function wcccpp_ajax_callback() {
 
 function wcccpp_enqueue_script() {
 	wp_enqueue_script( 'wcccpp-calculator', wcccpp_directory_uri() . 'assets/js/wcccpp-calculator.js', array(), '0.0.1', true );
+	wp_localize_script( 'wcccpp-calculator', 'wcccpp_ajax', array( 'url' => admin_url( 'admin-ajax.php' ) ) );
 }
