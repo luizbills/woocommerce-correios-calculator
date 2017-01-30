@@ -35,7 +35,7 @@ window.jQuery(document).ready(function ($) {
 
 			$.ajax({
 				type: 'post',
-				url: '/wp-admin/admin-ajax.php',
+				url: wcccpp_ajax.url,
 				data: data,
 				success: function(res) {
 					if (debug) console.log(res)
