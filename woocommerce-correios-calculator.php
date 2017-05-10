@@ -3,7 +3,7 @@
  * Plugin Name:	Woocommerce Correios CEP Calculator for Product Page
  * Plugin URI:	https://github.com/luizbills/woocommerce-correios-cep-calculator-for-product-page
  * Description:	Includes a shipping calculator of Correios on product page.
- * Version:		0.2.0
+ * Version:		0.2.1
  * Author:		Luiz Bills
  * Author URI:	http://luizp.com/
  * License:		MIT
@@ -36,7 +36,7 @@ function wcccpp_settings() {
 
 	// PAC
 	array_push( $settings['methods'], array(
-		'service_code' => '41106',
+		'service_code' => '04510',
 		'title' => 'PAC',
 		'origin_postcode' => $settings['global_origin_postcode'],
 
@@ -59,7 +59,7 @@ function wcccpp_settings() {
 
 	// SEDEX
 	array_push( $settings['methods'], array(
-		'service_code' => '40010',
+		'service_code' => '04014',
 		'title' => 'SEDEX',
 		'origin_postcode' => $settings['global_origin_postcode'],
 
