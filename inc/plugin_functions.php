@@ -11,7 +11,7 @@ function wcccpp_sanitize_postcode( $postcode ) {
 function wcccpp_format_price( $price, $fee ) {
 	$price = str_replace( '.', '', $price );
 	$price = str_replace( ',', '.', $price );
-	
+
 	return floatval( $price ) + floatval( $fee );
 }
 
@@ -37,7 +37,7 @@ function wcccpp_safe_load_xml( $source, $options = 0 ) {
 
 function wcccpp_get_error_message( $error ) {
 	$msg = '';
-	
+
 	switch ( $error ) {
 		case '-3':
 			$msg = 'CEP de destino inválido';
@@ -58,15 +58,19 @@ function wcccpp_get_error_message( $error ) {
 			$msg = 'O sistema do Correios está temporariamente fora do ar. Favor tentar mais tarde.';
 			break;
 		default:
+			$msg = 'Erro inesperado.';
+			if ( is_user_logged_in() && current_user_can('administrator') ) {
+				$msg .= ' Provavelmente o plugin não foi configurado corretamente. <a href="https://github.com/luizbills/woocommerce-correios-calculator#como-configurar">Saiba mais</a>';
+			}
 			break;
 	}
-	
+
 	return $msg;
 }
 
 function wcccpp_get_shipping( $args ) {
 	$webservice_url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx';
-	
+
 	$data = array(
 		'nCdServico'          => $args['service_code'],
 		'nCdEmpresa'          => $args['login'],
@@ -84,16 +88,16 @@ function wcccpp_get_shipping( $args ) {
 		'sCdAvisoRecebimento' => $args['receipt_notice'],
 		'StrRetorno'          => 'xml',
 	);
-	
+
 	$url = add_query_arg( $data, $webservice_url );
-	
+
 	$response = wp_safe_remote_get( esc_url_raw( $url ), array( 'timeout' => 30 ) );
-	
+
 	$shipping = array();
-	
+
 	$shipping['code'] = $args['service_code'];
 	$shipping['title'] = $args['title'];
-	
+
 	if ( is_wp_error( $response ) ) {
 		$shipping['error'] = true;
 		$shipping['msg'] = 'O webservice do Correios está indisponível no momento';
@@ -105,7 +109,7 @@ function wcccpp_get_shipping( $args ) {
 			$shipping['error'] = true;
 			$shipping['msg'] = 'Não foi possível processar o retorno do webservice do Correios.';
 		}
-		
+
 		if ( isset( $result->cServico ) ) {
 			$result = $result->cServico;
 			// valid xml response
@@ -126,19 +130,19 @@ function wcccpp_get_shipping( $args ) {
 		}
 	} else {
 		$shipping['error'] = true;
-		$shipping['msg'] = '';
+		$shipping['msg'] = 'Erro na resposta do correios.';
 	}
-	
+
 	return $shipping;
 }
 
 function wcccpp_ajax_callback() {
 	$settings = wcccpp_settings();
 	$responses = array();
-	
+
 	if ( count( $settings['methods'] ) > 0 ) {
 		do_action( 'wcccpp_before_calculate', $settings );
-		
+
 		foreach ($settings['methods'] as $method) {
 			$method['origin_postcode'] = $_POST['origin_postcode'];
 			$method['destination_postcode'] = $_POST['destination_postcode'];
