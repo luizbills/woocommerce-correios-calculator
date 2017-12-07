@@ -1,5 +1,7 @@
 # Calculadora de Frete do Correios para página de produto do Woocommerce
 
+> ATENÇÃO: Este plugin não está mais recebendo suporte. Use-o por sua própria conta e risco.
+
 ## Como instalar
 - Crie uma pasta chamada `woocommerce-correios-calculator` dentro de `wp-content/plugins/` e coloque todos os arquivos na raiz dessa pasta.
 
