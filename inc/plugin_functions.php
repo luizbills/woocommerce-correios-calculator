@@ -58,9 +58,9 @@ function wcccpp_get_error_message( $error ) {
 			$msg = 'O sistema do Correios está temporariamente fora do ar. Favor tentar mais tarde.';
 			break;
 		default:
-			$msg = 'Erro inesperado.';
+			$msg = "Erro inesperado ($error).";
 			if ( is_user_logged_in() && current_user_can('administrator') ) {
-				$msg .= ' Provavelmente o plugin não foi configurado corretamente. <a href="https://github.com/luizbills/woocommerce-correios-calculator#como-configurar">Saiba mais</a>';
+				$msg .= ' Provavelmente o plugin não foi configurado corretamente. <a target="_blank" href="https://github.com/luizbills/woocommerce-correios-calculator#como-configurar">Saiba mais</a>';
 			}
 			break;
 	}
